@@ -3,7 +3,6 @@
 namespace PMA\HtmlToPdfBundle\Controller;
 
 use PMA\HtmlToPdfBundle\Asset\AssetAccessorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 /**
  * @author Philipp Marien
  */
-class AssetAccessController extends AbstractController
+class AssetAccessController
 {
     public function __construct(private readonly AssetAccessorInterface $accessor)
     {
