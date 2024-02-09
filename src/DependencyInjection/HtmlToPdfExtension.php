@@ -3,8 +3,12 @@
 namespace PMA\HtmlToPdfBundle\DependencyInjection;
 
 use PMA\HtmlToPdf\HtmlToPdf;
+use PMA\HtmlToPdfBundle\Asset\AssetAccessor;
+use PMA\HtmlToPdfBundle\Asset\AssetAccessorInterface;
 use PMA\HtmlToPdfBundle\Bridge\FoundationBridge;
 use PMA\HtmlToPdfBundle\Bridge\TwigBridge;
+use PMA\HtmlToPdfBundle\Controller\AssetAccessController;
+use PMA\HtmlToPdfBundle\Twig\Runtime\HtmlToPdfExtensionRuntime;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 use Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface;
@@ -25,7 +29,32 @@ class HtmlToPdfExtension extends ConfigurableExtension
 
         $container->autowire(FoundationBridge::class)->setPublic(false);
 
+        ##############################################################
+        ### Asset Access
+        ##############################################################
+        $container->autowire(AssetAccessor::class)
+            ->setArgument('$projectDir', $container->getParameter('kernel.project_dir'))
+            ->setPublic(false);
+
+        $container->setAlias(AssetAccessorInterface::class, AssetAccessor::class)
+            ->setPublic(false);
+
+        $container->autowire(AssetAccessController::class)
+            ->addTag('controller.service_arguments')
+            ->setPublic(true);
+
+        ##############################################################
+        ### Twig
+        ##############################################################
         $container->autowire(TwigBridge::class)->setPublic(false);
+
+        $container->autowire(HtmlToPdfExtensionRuntime::class)
+            ->setPublic(false)
+            ->addTag('twig.runtime');
+
+        $container->autowire(\PMA\HtmlToPdfBundle\Twig\Extension\HtmlToPdfExtension::class)
+            ->setPublic(false)
+            ->addTag('twig.extension');
 
         ##############################################################
         ### Symfony Psr-Http-Message-Bridge
