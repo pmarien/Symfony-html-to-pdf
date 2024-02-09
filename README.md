@@ -5,7 +5,8 @@ Symfony integration for pmarien/html-to-pdf
 1. Requirements
 2. How to install?
 3. How to configure?
-4. How to use?
+4. How to use internal assets?
+5. How to use?
     1. Controller (Inline PDF)
     1. Controller (Download PDF)
     1. Controller (Store PDF file)
@@ -39,6 +40,29 @@ per day.
 html_to_pdf:
   apiKey: 'YOUR_API_KEY'
 ```
+
+## How to use internal assets?
+
+If you want to use assets in your pdf, they have to be public accessible via http for the pdf generator.
+Sometimes you want to use the assets, but don't want to publish them.
+For those cases, this bundle comes with an AssetAccessController, which requires a hash for file protection.
+
+The routing have to be enabled via config (`config/routes/html_to_pdf.yaml`):
+
+```yaml
+HtmlToPdfBundle:
+  resource: '@HtmlToPdfBundle/Resources/config/routes.xml'
+```
+
+Asset uris can be build manually (route name: `html_to_pdf_get_file`, required parameters: `filename` and `hash`) or via
+twig filter:
+
+```html
+<img src="{{ '/assets/images/test.png'|pdfAsset }}" alt="Test">
+```
+
+If you build uris manually, the hash can be generated via `PMA\HtmlToPdfBundle\Asset\AssetAccessorInterface::getHash`
+(available as symfony service).
 
 ## How to use?
 

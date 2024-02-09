@@ -18,7 +18,7 @@ class AssetAccessor implements AssetAccessorInterface
     {
         $file = $this->getSplFileInfo($filename);
 
-        if ($this->getHash($file) !== $hash) {
+        if ($this->getHash($filename) !== $hash) {
             throw new AccessDeniedException($filename);
         }
 
