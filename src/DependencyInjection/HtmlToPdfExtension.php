@@ -51,8 +51,7 @@ class HtmlToPdfExtension extends ConfigurableExtension
 
         $container->autowire(FoundationBridge::class)->setPublic(false);
 
-        /** @noinspection ClassConstantCanBeUsedInspection */
-        if ($container->has('Twig\\Environment')) {
+        if ($container->has('twig')) {
             $container->autowire(TwigBridge::class)->setPublic(false);
         }
     }
