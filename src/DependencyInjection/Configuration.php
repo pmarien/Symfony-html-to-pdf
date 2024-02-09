@@ -16,6 +16,8 @@ class Configuration implements ConfigurationInterface
         $root = $builder->getRootNode()->addDefaultsIfNotSet()->children();
 
         $root->scalarNode('apiKey')->defaultNull();
+        $root->scalarNode('assetScheme')->defaultNull();
+        $root->scalarNode('assetHost')->defaultNull();
 
         return $builder;
     }

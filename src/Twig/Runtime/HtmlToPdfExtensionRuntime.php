@@ -15,13 +15,26 @@ class HtmlToPdfExtensionRuntime implements RuntimeExtensionInterface
 {
     public function __construct(
         private readonly RouterInterface $router,
-        private readonly AssetAccessorInterface $accessor
+        private readonly AssetAccessorInterface $accessor,
+        private readonly ?string $assetScheme = null,
+        private readonly ?string $assetHost = null,
     ) {
     }
 
     public function pdfAsset(string $filename): Markup
     {
-        return new Markup(
+        $context = clone $this->router->getContext();
+
+        $pdfContext = clone $context;
+        if ($this->assetScheme) {
+            $pdfContext->setScheme($this->assetScheme);
+        }
+        if ($this->assetHost) {
+            $pdfContext->setHost($this->assetHost);
+        }
+        $this->router->setContext($pdfContext);
+
+        $markup = new Markup(
             $this->router->generate(
                 'html_to_pdf_get_file',
                 [
@@ -32,5 +45,9 @@ class HtmlToPdfExtensionRuntime implements RuntimeExtensionInterface
             ),
             'utf-8'
         );
+
+        $this->router->setContext($context);
+
+        return $markup;
     }
 }

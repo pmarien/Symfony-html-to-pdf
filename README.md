@@ -39,6 +39,8 @@ per day.
 ```yaml
 html_to_pdf:
   apiKey: 'YOUR_API_KEY'
+  assetScheme: 'http' #optional to use a different asset location
+  assetHost: 'example.com' #optional to use a different asset location
 ```
 
 ## How to use internal assets?

@@ -50,6 +50,8 @@ class HtmlToPdfExtension extends ConfigurableExtension
 
         $container->autowire(HtmlToPdfExtensionRuntime::class)
             ->setPublic(false)
+            ->setArgument('$assetScheme', $mergedConfig['assetScheme'])
+            ->setArgument('$assetHost', $mergedConfig['assetHost'])
             ->addTag('twig.runtime');
 
         $container->autowire(\PMA\HtmlToPdfBundle\Twig\Extension\HtmlToPdfExtension::class)
