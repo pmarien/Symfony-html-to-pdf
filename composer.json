@@ -1,0 +1,28 @@
+{
+  "name": "pmarien/html-to-pdf-bundle",
+  "description": "Symfony integration for pmarien/html-to-pdf",
+  "type": "symfony-bundle",
+  "require": {
+    "php": ">=8.1",
+    "symfony/framework-bundle": "^5.0|^6.0|^7.0",
+    "symfony/psr-http-message-bridge": "^2.0|^6.0|^7.0",
+    "pmarien/html-to-pdf": "^1.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "twig/twig": "^3.8"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "PMA\\HtmlToPdfBundle\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Philipp Marien",
+      "email": "dev@philipp-marien.de"
+    }
+  ],
+  "minimum-stability": "stable"
+}
